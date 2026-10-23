@@ -40,13 +40,13 @@ async def require_api_auth(request: Request, call_next):
     expected = os.getenv('OPERATOR_API_KEY', '')
     supplied = request.headers.get('X-Operator-Key', '')
         # Debug BEFORE checking authentication
-    print(
-        "AUTH DEBUG:",
-        "configured=", bool(expected),
-        "expected_length=", len(expected),
-        "received_length=", len(supplied),
-        flush=True
-    )
+    # print(
+    #     "AUTH DEBUG:",
+    #     "configured=", bool(expected),
+    #     "expected_length=", len(expected),
+    #     "received_length=", len(supplied),
+    #     flush=True
+    # )
     if not expected or not secrets.compare_digest(supplied, expected):
         return JSONResponse({'detail': 'Valid X-Operator-Key required'}, status_code=401)
     return await call_next(request)
